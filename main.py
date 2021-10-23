@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 import json
-import pyaudio
+# import pyaudio
 from moviepy.editor import *
 import uvicorn
 import aiofiles
@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from uuid import uuid4
-from schemas import UploadAudio
+
 
 app = FastAPI()
 
@@ -49,7 +49,7 @@ async def upload_file_mp4(request: Request, title: str = Form(...), description:
                     await aiofiles.os.remove(file_name)
                     raise HTTPException(status_code=418,
                                         detail="Проверьте размер файла. Должен быть не больше 300 mb")
-    return templates.TemplateResponse('download.html', {'request': request, 'title': title, 'description': description, 'file': file})
+    return templates.TemplateResponse('download.html', {'request': request})
 
 
 
@@ -164,7 +164,7 @@ async def upload_videotoaudio(request: Request, file: UploadFile = File(...), ti
                     await aiofiles.os.remove(file_name)
                     raise HTTPException(status_code=418,
                                         detail="Проверьте размер файла. Должен быть не больше 300 mb")
-        return templates.TemplateResponse('download.html', {'request': request, 'title': title, 'description': description, 'file': file})
+        return templates.TemplateResponse('download.html', {'request': request})
 
 
 
@@ -202,7 +202,7 @@ async def upload_file_wav(request: Request, title: str = Form(...), description:
                             file_text = shutil.copy2(r'file_name.txt', f'{file_name}.docx')
                             print(out)
                             print(file_text)
-    return templates.TemplateResponse('download.html', context={'request': request, 'title': title, 'description': description, 'file': file})
+    return templates.TemplateResponse('download.html', context={'request': request})
 
 
 @app.get('/audiototext', response_class=HTMLResponse)

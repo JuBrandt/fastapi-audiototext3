@@ -1,4 +1,13 @@
 FROM python:3.8
-RUN pip3 install fastapi uvicorn
-COPY ./fastapi-audiototext3 /app
-CMD ["uvicorn", "fastapi-audiototext3.main:app", "--host", "0.0.0.0", "--port", "15400"]
+
+WORKDIR /home/julia/dev/fastapi-audiototext3
+
+RUN python -m pip install --upgrade pip
+
+COPY ./requirements.txt /home/julia/dev/fastapi-audiototext3/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /home/julia/dev/fastapi-audiototext3/requirements.txt
+
+COPY ./ /home/julia/dev/fastapi-audiototext3
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "15400"]
