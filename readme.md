@@ -17,10 +17,12 @@
 **Установить локально**.
 Вводные данные ОС (ubuntu 20 focal)
 
-1. Сохранить репозиторий в вашу папку, команда: git clone https://github.com/JuBrandt/fastapi-audiototext3.git
-2. Команда pip install requirements.txt
-3. Команда uvicorn main:app --reload
-4. В браузере 127.0.0.1:8000/index
+1. Создать виртуальную среду python3 -m venv tutorial-env
+2. Активировать виртуальную среду source tutorial-env/bin/activate
+3. Сохранить репозиторий в вашу папку, команда: git clone https://github.com/JuBrandt/fastapi-audiototext3.git
+4. Команда pip install -r requirements.txt
+5. Команда uvicorn main:app --reload
+6. В браузере 127.0.0.1:8000/index
 
 **Установить локально с Docker.** Вводные данные ОС (windows, macos, linux)
 

@@ -2,9 +2,11 @@ version: '3'
 services:
   core_api:
     build: .
+    restart: always
     container_name: "fastapi-audiototext-full"
     ports:
       - "8000:15400"
+    hostname: "reklamain.ru"
     volumes:
       - ./app:/app
 
