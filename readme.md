@@ -30,8 +30,9 @@
 2. Создать папку
 3. Команда docker pull juliabrandt/fastapi-audiototext:v3 (последняя версия)
 Репозиторий dockerhub https://hub.docker.com/r/juliabrandt/fastapi-audiototext/tags
-4. Команда docker-compose up -d
-5. В браузере 127.0.0.1:8000/index
+4. Установить docker-comlose https://docs.docker.com/compose/install/
+5. Команда docker-compose up -d
+6. В браузере 127.0.0.1:8000/index
 
 **Документация api**
 
