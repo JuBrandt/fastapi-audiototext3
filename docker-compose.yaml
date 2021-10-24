@@ -1,12 +1,31 @@
 version: '3'
 services:
-  core_api:
-    build: .
+  proxy:
+    container_name: proxy
+    build: proxy
     restart: always
-    container_name: "fastapi-audiototext-full"
+    depends_on:
+      - backend
     ports:
-      - "8000:15400"
-    hostname: "reklamain.ru"
+      - 80:80
+    volumes:
+      - ./web/conf.d:/etc/nginx/conf.d
+    networks:
+      - frontnet
+  backend:
+    build: backend
+    restart: always
+    container_name: "backend"
+    expose:
+      - 8000
+    networks:
+      - backnet
+      - frontnet
+    ports:
+      - "8000:8000"
     volumes:
       - ./app:/app
+networks:
+  backnet:
+  frontnet:
 

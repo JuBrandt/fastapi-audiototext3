@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir --upgrade -r /home/julia/dev/fastapi-audiototext3
 
 COPY ./ /home/julia/dev/fastapi-audiototext3
 
-CMD ["uvicorn", "main:app", "--host", "185.26.121.104", "--port", "15400"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "15400"]
