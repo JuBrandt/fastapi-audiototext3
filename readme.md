@@ -22,7 +22,7 @@
 3. Команда uvicorn main:app --reload
 4. В браузере 127.0.0.1:8000/index
 
-**Установить с Docker.** Вводные данные ОС (windows, macos, linux)
+**Установить локально с Docker.** Вводные данные ОС (windows, macos, linux)
 
 1. Установить docker https://docs.docker.com/engine/install/
 2. Создать папку
