@@ -1,4 +1,5 @@
 import os
+
 import shutil
 import subprocess
 import json
@@ -14,6 +15,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from uuid import uuid4
 
+from pydantic.typing import List
 
 app = FastAPI()
 
@@ -66,7 +68,7 @@ def upload_file_mp4(request: Request):
 @app.post("/index", response_class=HTMLResponse)
 async def upload_file_mp3(request: Request, title: str = Form(...), description: str = Form(...), file: UploadFile = File(...)):
     file_name = f'{uuid4()}_{file.filename}'
-    if file.content_type == 'media/mp3':
+    if file.content_type == 'audio/mp3':
         async with aiofiles.open(file_name, "wb") as buffer:
             for i in range(10):
                 data = await file.read()
@@ -88,6 +90,7 @@ async def upload_file_mp3(request: Request, title: str = Form(...), description:
                     await aiofiles.os.remove(file_name)
                     raise HTTPException(status_code=418,
                                         detail="Проверьте размер файла. Должен быть не больше 300 mb")
+
                 return templates.TemplateResponse('download.html', {'request': request})
 
 
@@ -97,6 +100,26 @@ def upload_file_mp3(request: Request):
 
 
     return templates.TemplateResponse('index_.html', {'request': request})
+
+@app.post("/uploadfiles/")
+async def create_upload_files(files: List[UploadFile] = File(...)):
+    return {"filenames": [file.filename for file in files]}
+
+@app.get("/")
+async def main():
+    content = """
+<body>
+<form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+<input name="files" type="file" multiple>
+<input type="submit">
+</form>
+<form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+<input name="files" type="file" multiple>
+<input type="submit">
+</form>
+</body>
+    """
+    return HTMLResponse(content=content)
 
 '''----- start TEMPLATES jinja'''
 
@@ -185,7 +208,7 @@ def upload_videotoaudio(request: Request):
 @app.post("/audiototext", response_class=HTMLResponse)
 async def upload_file_wav(request: Request, title: str = Form(...), description: str = Form(...), file: UploadFile = File(...)):
     file_name = f'{uuid4()}_{file.filename}'
-    if file.content_type == 'media/wav':
+    if file.content_type == 'audio/wav':
         async with aiofiles.open(file_name, "wb") as buffer:
             for i in range(10):
                 data = await file.read()
@@ -262,5 +285,8 @@ async def getfiletext():
 
 
 
+
+
+
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8000, host='0.0.0.1', reload=True)
+    uvicorn.run('main:app', port=8000, host='0.0.0.2', reload=True)
