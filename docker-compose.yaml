@@ -1,31 +1,10 @@
 version: '3'
 services:
-  proxy:
-    container_name: proxy
-    build: proxy
-    restart: always
-    depends_on:
-      - backend
+  core_api:
+    build: .
+    container_name: "fastapi-audiototext-full"
     ports:
-      - 80:80
-    volumes:
-      - ./web/conf.d:/etc/nginx/conf.d
-    networks:
-      - frontnet
-  backend:
-    build: backend
-    restart: always
-    container_name: "backend"
-    expose:
-      - 8000
-    networks:
-      - backnet
-      - frontnet
-    ports:
-      - "8000:8000"
+      - "8000:15400"
     volumes:
       - ./app:/app
-networks:
-  backnet:
-  frontnet:
 
